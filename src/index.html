@@ -5,13 +5,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+  <title>Convert to PDF Frontend</title>
 </head>
 
 <body>
   <main>
-    <h1>Vanilla JavaScript App</h1>
+    <h1>Convert to PDF frontend</h1>
+    <p>Practice using Azure functions and Azure static web apps</p>
+    <textarea cols="100" rows="100" placeholder="put text for PDF here" id="pdf_text">
+
+    </textarea>
+    <button onclick="handleClick()">Convert to PDF</button>
   </main>
 </body>
+
+<script>
+  function handleClick() {
+    content = document.getElementById('pdf_text').value;
+
+    const url = `https://quackmd2pdf.azurewebsites.net/api/convert?code=rlwpIN9nGWnRBvuI6KOtQrHGyBPCe2USOZB3XhEmdaAxAzFuL9VIjg==&md_content=${content}`;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log("success!");
+      } else {
+        // If the request was not successful, log the error
+        console.error('Request failed. Status:', xhr.status);
+      }
+    };
+
+    xhr.onerror = function () {
+      console.error('Request failed. Network error.');
+    };
+    
+    xhr.send();
+  }
+</script>
 
 </html>
